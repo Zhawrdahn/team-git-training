@@ -1,0 +1,33 @@
+name: PR Quality Checks
+
+on:
+  pull_request:
+    branches:
+      - main  # run checks on PRs targeting main
+
+jobs:
+  lint:
+    name: Lint Python, YAML & JSON
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install linters
+        run: |
+          pip install ruff yamllint jsonlint
+
+      - name: Lint Python with Ruff
+        run: ruff check . --output-format=github
+
+      - name: Lint YAML
+        run: yamllint .
+
+      - name: Lint JSON
+        run: |
+          find . -name '*.json' -print0 | xargs -0 -n1 jsonlint -q

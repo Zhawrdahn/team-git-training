@@ -19,11 +19,11 @@ jobs:
             echo "Validating branch name: $BRANCH_NAME"
             
             if [[ ! "$BRANCH_NAME" =~ ^(feature|bugfix|hotfix)/.+$ ]]; then
-              echo "❌ Invalid branch name: $BRANCH_NAME"
+              echo "Invalid branch name: $BRANCH_NAME"
               echo "Must start with feature/, bugfix/, or hotfix/"
               exit 1
             else
-              echo "✅ Branch name is valid"
+              echo "Branch name is valid"
             fi
           else
             echo "Skipping validation for tags"

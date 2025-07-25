@@ -1,0 +1,19 @@
+name: Validate Branch Name
+
+on:
+  create:   # runs when a branch is created
+    branches-ignore:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch name
+        run: |
+          BRANCH_NAME="${GITHUB_REF##*/}"
+          if [[ ! "$BRANCH_NAME" =~ ^(feature|bugfix|hotfix)/.+$ ]]; then
+            echo "❌ Invalid branch name: $BRANCH_NAME"
+            echo "Must start with feature/, bugfix/, or hotfix/"
+            exit 1
+          fi

@@ -1,13 +1,15 @@
-name: PR Quality Checks
+name: Lint and Validate
 
 on:
   pull_request:
     branches:
-      - main  # run checks on PRs targeting main
+      - main
+  push:
+    branches:
+      - "feature/**"
 
 jobs:
   lint:
-    name: Lint Python, YAML & JSON
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -22,7 +24,7 @@ jobs:
         run: |
           pip install ruff yamllint jsonlint
 
-      - name: Lint Python with Ruff
+      - name: Lint Python
         run: ruff check . --output-format=github
 
       - name: Lint YAML

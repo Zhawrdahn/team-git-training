@@ -1,7 +1,7 @@
 name: Validate Branch Name
 
 on:
-  create:  # runs whenever a branch or tag is created
+  create: # runs whenever a branch or tag is created
 
 jobs:
   validate:
@@ -9,17 +9,21 @@ jobs:
     steps:
       - name: Check branch name
         run: |
-          # Extract the created ref name
           BRANCH_NAME="${GITHUB_REF##*/}"
+          echo "Created ref: ${GITHUB_REF}"
+          echo "Ref type: ${GITHUB_REF_TYPE}"
+          echo "Branch name: ${BRANCH_NAME}"
 
           # Only validate branches (not tags)
-          if [[ "${GITHUB_REF_TYPE}" == "branch" ]]; then
-            echo "Checking branch name: $BRANCH_NAME"
-
+          if [ "${GITHUB_REF_TYPE}" = "branch" ]; then
+            echo "Validating branch name: $BRANCH_NAME"
+            
             if [[ ! "$BRANCH_NAME" =~ ^(feature|bugfix|hotfix)/.+$ ]]; then
               echo "❌ Invalid branch name: $BRANCH_NAME"
               echo "Must start with feature/, bugfix/, or hotfix/"
               exit 1
+            else
+              echo "✅ Branch name is valid"
             fi
           else
             echo "Skipping validation for tags"

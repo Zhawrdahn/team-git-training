@@ -1,0 +1,28 @@
+name: Validate Branch Name on Creation
+
+on:
+  create:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch name
+        run: |
+          if [ "${GITHUB_REF_TYPE}" = "branch" ]; then
+            BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+            echo "Branch created: $BRANCH_NAME"
+
+            case "$BRANCH_NAME" in
+              feature/*|bugfix/*|hotfix/*)
+                echo "Branch name is valid."
+                ;;
+              *)
+                echo "Invalid branch name: $BRANCH_NAME"
+                echo "Must start with feature/, bugfix/, or hotfix/"
+                exit 1
+                ;;
+            esac
+          else
+            echo "Skipping tags"
+          fi

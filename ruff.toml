@@ -1,0 +1,8 @@
+# Enforce basic Pycodestyle + Pyflakes
+select = ["E", "W", "F"]
+
+# Ignore long line warnings
+ignore = ["E501"]
+
+# Enforce 4-space indentation
+indent-width = 4

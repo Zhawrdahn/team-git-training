@@ -1,4 +1,3 @@
----
 settings:
   environment: dev
   debug: true

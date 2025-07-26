@@ -22,4 +22,3 @@ jobs:
         run: ruff check . --output-format=github
       - name: Lint YAML
         run: yamllint .
-        

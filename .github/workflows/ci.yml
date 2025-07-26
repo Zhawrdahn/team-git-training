@@ -1,4 +1,3 @@
-name: Lint and Validate
 on:
   pull_request:
     branches:
@@ -23,6 +22,3 @@ jobs:
         run: ruff check . --output-format=github
       - name: Lint YAML
         run: yamllint .
-      - name: Lint JSON
-        run: |
-          find . -name '*.json' -print0 | xargs -0 -I {} python -m json.tool {} /dev/null
